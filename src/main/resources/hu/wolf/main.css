@@ -1,0 +1,15 @@
+.border-pane {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #60d1d1, #587fb6);;
+}
+
+.hbox {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.hbox .button {
+    -fx-border-radius: none;
+}
+
+.right-vbox {
+    -fx-background-color: linear-gradient(to bottom, rgba(19, 44, 152, 0.2), rgba(255, 255, 255, 0.2));
+}

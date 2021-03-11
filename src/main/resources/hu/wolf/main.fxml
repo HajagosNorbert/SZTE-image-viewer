@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600.0" prefWidth="1280.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.wolf.Controller">
+    <children>
+        <MenuBar VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleOpenAction" text="Open…" />
+                        <MenuItem mnemonicParsing="false" text="Save" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Quit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleRotateLeftAction" text="RotateLeft" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <BorderPane fx:id="borderPane" prefHeight="600.0" prefWidth="1280.0" styleClass="border-pane" VBox.vgrow="NEVER">
+            <center>
+                <ImageView fx:id="imageView" fitHeight="396.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+            </center>
+            <right>
+                <VBox fx:id="rightVBox" prefHeight="497.0" prefWidth="220.0" spacing="10.0" styleClass="right-vbox" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="36.0" prefWidth="219.0" text="Color Scale">
+                            <font>
+                                <Font name="System Bold Italic" size="29.0" />
+                            </font>
+                        </Label>
+                  <AnchorPane prefHeight="98.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="17.0" layoutY="24.0" text="Red" />
+                        <Label layoutX="17.0" layoutY="41.0" text="Green" />
+                        <Label layoutX="17.0" layoutY="58.0" text="Blue" />
+                         <Slider fx:id="redSlider" blockIncrement="1.0" layoutX="63.0" layoutY="25.0" max="255.0" onMouseDragged="#handleRGBSlider" onMouseMoved="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" />
+                        <Slider fx:id="greenSlider" blockIncrement="1.0" layoutX="63.0" layoutY="43.0" max="255.0" onDragDetected="#handleRGBSlider" onMouseDragged="#handleRGBSlider" onMouseMoved="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" />
+                        <Slider fx:id="blueSlider" blockIncrement="1.0" layoutX="63.0" layoutY="60.0" max="255.0" onDragDetected="#handleRGBSlider" onMouseDragged="#handleRGBSlider" onMouseMoved="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" />
+                              <Label fx:id="rgbSliderLabel" layoutX="26.0" layoutY="2.0" text="RGB">
+                                  <font>
+                                      <Font size="15.0" />
+                                  </font>
+                                  <opaqueInsets>
+                                      <Insets />
+                                  </opaqueInsets>
+                              </Label>
+                        <Pane fx:id="rgbBox" layoutX="2.0" layoutY="2.0" prefHeight="20.0" prefWidth="20.0" />
+                     </children>
+                  </AnchorPane>
+                        <Label text="Invert">
+                            <font>
+                                <Font size="15.0" />
+                            </font>
+                        </Label>
+                        <CheckBox fx:id="checkBox" mnemonicParsing="false" onAction="#handleInversion" />
+                    </children>
+                    <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                    </padding>
+                </VBox>
+            </right>
+            <top>
+                <HBox alignment="CENTER" prefHeight="43.0" prefWidth="1280.0" styleClass="hbox" BorderPane.alignment="CENTER">
+                    <children>
+                        <Button mnemonicParsing="false">
+                            <graphic>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@imgs/zoom-logo.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <cursor>
+                                <Cursor fx:constant="DEFAULT" />
+                            </cursor>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false">
+                            <graphic>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@imgs/resize_logo.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <!-- rotate left-->
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleRotateRightAction">
+                            <graphic>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@imgs/rotate_right_logo.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleRotateLeftAction">
+                            <graphic>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@imgs/rotate_left_logo.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleColorScale">
+                            <graphic>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@imgs/color_scale_logo.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+
+
+
+                    </children>
+                    <BorderPane.margin>
+                        <Insets />
+                    </BorderPane.margin>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </HBox>
+            </top>
+            <left>
+                <VBox prefHeight="497.0" prefWidth="220.0" visible="false" BorderPane.alignment="CENTER" />
+            </left>
+        </BorderPane>
+
+    </children>
+</VBox>
