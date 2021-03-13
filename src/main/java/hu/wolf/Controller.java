@@ -2,6 +2,7 @@ package hu.wolf;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -18,6 +19,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 
 public class Controller {
+    public Button minusButton;
+    public Button plusButton;
     // fx:id="imageId"
     @FXML
     private ImageView imageView;
@@ -140,7 +143,7 @@ public class Controller {
 
 
     }
-
+    
     private Image invertImage(Image image){
         PixelReader reader = image.getPixelReader();
 
@@ -155,10 +158,35 @@ public class Controller {
                 writer.setColor(x, y, color.invert());
             }
         }
-
-
         return wImage;
-}
+    }
+ 
+
+
+    /**
+     * handlezoom
+     */
+
+    @FXML
+    private void handleZoom(){
+        if (imageView == null) return;
+
+        plusButton.setVisible(!plusButton.isVisible());
+        minusButton.setVisible(!minusButton.isVisible());
+
+    }
+
+    @FXML
+    private  void handleZoomPlusAction(){
+        System.out.println("pozitiv");
+    }
+
+    
+
+    @FXML
+    private void handleZoomMinusAction(){
+        System.out.println("Negativ");
+    }
 
 
     public Controller() {
