@@ -1,13 +1,20 @@
 package hu.wolf;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.*;
 import javafx.scene.image.*;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -95,6 +102,8 @@ public class Controller {
     @FXML
     private Pane rgbBox;
 
+
+
     @FXML
     private void handleRGBSlider(){
         int r = (int) redSlider.getValue();
@@ -128,6 +137,7 @@ public class Controller {
         );
     }
 
+
     @FXML
     private CheckBox checkBox;
 
@@ -160,13 +170,14 @@ public class Controller {
         }
         return wImage;
     }
- 
+
+
+
 
 
     /**
      * handlezoom
      */
-
     @FXML
     private void handleZoom(){
         if (imageView == null) return;
@@ -174,18 +185,97 @@ public class Controller {
         plusButton.setVisible(!plusButton.isVisible());
         minusButton.setVisible(!minusButton.isVisible());
 
-    }
+        final double w = image.getWidth();
+        final double h = image.getHeight();
+        final double max = Math.max(w, h);
+        final int width = (int) (500 * w / max);
+        final int heigth = (int) (500 * h / max);
+
+        imageView.setFitHeight(heigth);
+        imageView.setFitWidth(width);
+
+
+        borderPane.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                imageView.setY((newValue.doubleValue() - imageView.getFitHeight()) / 2);
+            }
+
+        });
+
+        borderPane.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                imageView.setX((newValue.doubleValue() - imageView.getFitWidth()) / 2);
+            }
+
+        });
+
+
+        final double scale = 5;
+        borderPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+            double rate = 0;
+            if (event.getDeltaY() > 0) {
+                rate = 0.05;
+            } else {
+                rate = -0.05;
+            }
+            double newWidth = imageView.getFitWidth() + w * rate;
+            double newHeight = imageView.getFitHeight() + h * rate;
+            if (newWidth <= width  || newWidth > scale * width ) {
+                return;
+            }
+
+            Point2D eventPoint = new Point2D(event.getSceneX(), event.getSceneY());
+            Point2D imagePoint = borderPane.localToScene(new Point2D(imageView.getX(), imageView.getY()));
+            Rectangle2D imageRect = new Rectangle2D(imagePoint.getX(), imagePoint.getY(), imageView.getFitWidth(), imageView.getFitHeight());
+            Point2D ratePoint;
+            Point2D eventPointDistance;
+            if (newWidth > scale / 4 * width && imageRect.contains(eventPoint)) {
+                ratePoint = eventPoint.subtract(imagePoint);
+                ratePoint = new Point2D(ratePoint.getX() / imageView.getFitWidth(), ratePoint.getY() / imageView.getFitHeight());
+                eventPointDistance = borderPane.sceneToLocal(eventPoint);
+            } else {
+                ratePoint = new Point2D(0.5, 0.5);
+                eventPointDistance = new Point2D(borderPane.getWidth() / 2,
+                        borderPane.getHeight() / 2);
+            }
+
+            imageView.setX(eventPointDistance.getX() - newWidth * ratePoint.getX());
+            imageView.setY(eventPointDistance.getY() - newHeight * ratePoint.getY());
+            imageView.setFitWidth(newWidth);
+            imageView.setFitHeight(newHeight);
+        });
+
+
+
+}
+
+
 
     @FXML
     private  void handleZoomPlusAction(){
         System.out.println("pozitiv");
+        imageView.setX(imageView.getX()/2);
+        imageView.setFitHeight(200);
     }
-
-    
 
     @FXML
     private void handleZoomMinusAction(){
         System.out.println("Negativ");
+    }
+
+    private double xZoom,yZoom;
+
+    @FXML
+    private void readMousePos(){
+        imageView.setPickOnBounds(true);
+
+        imageView.setOnMouseClicked(e -> {
+            xZoom=e.getX();
+            yZoom = e.getY();
+
+        });
     }
 
 

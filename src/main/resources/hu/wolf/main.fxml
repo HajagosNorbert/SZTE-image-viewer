@@ -51,9 +51,6 @@
             </menus>
         </MenuBar>
         <BorderPane fx:id="borderPane" prefHeight="600.0" prefWidth="1280.0" styleClass="border-pane" VBox.vgrow="NEVER">
-            <center>
-                <ImageView fx:id="imageView" fitHeight="396.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-            </center>
             <right>
                 <VBox fx:id="rightVBox" prefHeight="497.0" prefWidth="220.0" spacing="10.0" styleClass="right-vbox" BorderPane.alignment="CENTER">
                     <children>
@@ -96,7 +93,7 @@
             <top>
                 <HBox alignment="CENTER" prefHeight="43.0" prefWidth="1280.0" styleClass="hbox" BorderPane.alignment="CENTER">
                     <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER"  mnemonicParsing="false" onAction="#handleZoom">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleZoom">
                             <graphic>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -158,7 +155,7 @@
                 </HBox>
             </top>
             <left>
-                <VBox prefHeight="497.0" prefWidth="220.0" visible="false" BorderPane.alignment="CENTER" />
+                <VBox prefHeight="438.0" prefWidth="121.0" visible="false" BorderPane.alignment="CENTER" />
             </left>
             <bottom>
                 <HBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -178,6 +175,18 @@
                     </children>
                 </HBox>
             </bottom>
+            <center>
+            <HBox prefHeight="438.0" prefWidth="786.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="200.0" />
+                  <StackPane prefHeight="438.0" prefWidth="281.0">
+                     <children>
+                            <ImageView fx:id="imageView" fitHeight="414.0" fitWidth="679.0" onMouseClicked="#readMousePos" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+         </center>
         </BorderPane>
 
     </children>
