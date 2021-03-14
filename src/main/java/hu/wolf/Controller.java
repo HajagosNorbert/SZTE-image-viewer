@@ -1,7 +1,6 @@
 package hu.wolf;
 
 import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -9,98 +8,52 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.*;
 import javafx.scene.image.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
 import javafx.embed.swing.SwingFXUtils;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URLDecoder;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class Controller {
-    public Button minusButton;
-    public Button plusButton;
+    @FXML
+    private Button minusButton;
+    @FXML
+    private Button plusButton;
     // fx:id="imageId"
     @FXML
     private ImageView imageView;
-
-    // fx:id="borderPane"
-    @FXML
-    private BorderPane borderPane;
 
     @FXML
     private VBox rightVBox;
 
     private Image image;
 
-    private File imageFile;
-
+    /**
+     * Calls the ImageIOHandler.loadImage() method, puts the loaded image into the ImageView and logs the result
+     */
     @FXML
     private void handleOpenAction()   {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Image");
-        fileChooser.getExtensionFilters().add(new ExtensionFilter("Images", "*.bmp", "*.png", "*.jpg", "*.gif"));
-        Stage stage =  (Stage) borderPane.getScene().getWindow();
-
-        File file = fileChooser.showOpenDialog(stage);
-        this.imageFile = file;
-
-        if (file != null) {
-            try {
-                String imageUrl = file.toURI().toURL().toExternalForm();
-                this.image = new Image(imageUrl);
-
-                this.imageView.setImage(image);
-                System.out.println("fileName: " + file.getName());
-                System.out.println("+heigth: " + this.image.getHeight());
-                System.out.println("+width : " + this.image.getWidth());
-
-            } catch (MalformedURLException ex) {
-                throw new IllegalStateException(ex);
-            }
-        }
-    }
-    /**
-    Ha nincs betöltve kép, azt is kezelje!
-    */
-    @FXML
-    private void handleSaveAction(ActionEvent actionEvent) {
-        if (this.image == null){
-            System.out.println("No image to save");
+        Image loadedImage = ImageIOHandler.loadImage();
+        if(loadedImage == null){
+            System.out.println("Didn't open anything");
             return;
         }
-        Stage stage =  (Stage) borderPane.getScene().getWindow();
-        String imgURL = this.image.getUrl();
+        this.image = loadedImage;
+        this.imageView.setImage(image);
+        System.out.println("fileUrl: " + this.image.getUrl());
+        System.out.println("+height: " + this.image.getHeight());
+        System.out.println("+width : " + this.image.getWidth());
+    }
 
-        int imageNameStartIndexInPath = imgURL.lastIndexOf('/') + 1;
-        String imageName = imgURL.substring(imageNameStartIndexInPath);
-
-        String imageDirectory = imgURL.substring(imgURL.indexOf('/'), imageNameStartIndexInPath-1);
-        System.out.println(imageDirectory);
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File(imageDirectory));
-        fileChooser.setTitle("Save Image");
-        fileChooser.getExtensionFilters().add(new ExtensionFilter("Images", "*.bmp", "*.png", "*.jpg", "*.gif"));
-        fileChooser.setInitialFileName("new "+ imageName);
-        File fileToSave = fileChooser.showSaveDialog(stage);
-
-        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(this.image, null);
-        try {
-            ImageIO.write(bufferedImage, "png", fileToSave);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
+    /**
+     * Calls the ImageIOHandler.saveImage() method with image convertion to BufferedImage and logs the result
+     */
+    @FXML
+    private void handleSaveAction() {
+        boolean success = ImageIOHandler.saveImage(SwingFXUtils.fromFXImage(this.image, null));
+        if(success)
+            System.out.println("Save successful");
+        else
+            System.out.println("Save not happened");
     }
 
     @FXML
