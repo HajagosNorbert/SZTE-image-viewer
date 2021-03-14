@@ -1,6 +1,7 @@
 package hu.wolf;
 
 import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -13,10 +14,17 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-
+import javafx.embed.swing.SwingFXUtils;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URLDecoder;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Controller {
     public Button minusButton;
@@ -34,30 +42,64 @@ public class Controller {
 
     private Image image;
 
+    private File imageFile;
+
     @FXML
     private void handleOpenAction()   {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open File Dialog");
+        fileChooser.setTitle("Select Image");
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Images", "*.bmp", "*.png", "*.jpg", "*.gif"));
         Stage stage =  (Stage) borderPane.getScene().getWindow();
 
         File file = fileChooser.showOpenDialog(stage);
+        this.imageFile = file;
 
         if (file != null) {
             try {
                 String imageUrl = file.toURI().toURL().toExternalForm();
-                image = new Image(imageUrl);
+                this.image = new Image(imageUrl);
 
-                imageView.setImage(image);
-
+                this.imageView.setImage(image);
                 System.out.println("fileName: " + file.getName());
-                System.out.println("+heigth: " + image.getHeight());
-                System.out.println("+width : " + image.getWidth());
+                System.out.println("+heigth: " + this.image.getHeight());
+                System.out.println("+width : " + this.image.getWidth());
 
             } catch (MalformedURLException ex) {
                 throw new IllegalStateException(ex);
             }
-
         }
+    }
+    /**
+    Ha nincs betöltve kép, azt is kezelje!
+    */
+    @FXML
+    private void handleSaveAction(ActionEvent actionEvent) {
+        if (this.image == null){
+            System.out.println("No image to save");
+            return;
+        }
+        Stage stage =  (Stage) borderPane.getScene().getWindow();
+        String imgURL = this.image.getUrl();
+
+        int imageNameStartIndexInPath = imgURL.lastIndexOf('/') + 1;
+        String imageName = imgURL.substring(imageNameStartIndexInPath);
+
+        String imageDirectory = imgURL.substring(imgURL.indexOf('/'), imageNameStartIndexInPath-1);
+        System.out.println(imageDirectory);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File(imageDirectory));
+        fileChooser.setTitle("Save Image");
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Images", "*.bmp", "*.png", "*.jpg", "*.gif"));
+        fileChooser.setInitialFileName("new "+ imageName);
+        File fileToSave = fileChooser.showSaveDialog(stage);
+
+        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(this.image, null);
+        try {
+            ImageIO.write(bufferedImage, "png", fileToSave);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 

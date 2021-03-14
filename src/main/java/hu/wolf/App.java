@@ -27,8 +27,8 @@ public class App extends Application {
         stage.show();
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+    private static Parent loadFXML(String fileName) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fileName + ".fxml"));
         return fxmlLoader.load();
     }
 
