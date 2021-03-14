@@ -8,6 +8,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -17,6 +18,7 @@ import javafx.scene.image.*;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -28,7 +30,11 @@ import java.net.MalformedURLException;
 public class Controller {
     public Button minusButton;
     public Button plusButton;
+    public StackPane stackPane;
+    public Pane pane;
     // fx:id="imageId"
+
+
     @FXML
     private ImageView imageView;
 
@@ -103,9 +109,10 @@ public class Controller {
     private Pane rgbBox;
 
 
-
+/**commented*/
     @FXML
     private void handleRGBSlider(){
+        /*
         int r = (int) redSlider.getValue();
         int g = (int) greenSlider.getValue();
         int b = (int) blueSlider.getValue();
@@ -135,6 +142,7 @@ public class Controller {
                         .then((Effect) blush)
                         .otherwise((Effect) null)
         );
+        */
     }
 
 
@@ -195,7 +203,7 @@ public class Controller {
         imageView.setFitWidth(width);
 
 
-        borderPane.heightProperty().addListener(new ChangeListener<Number>() {
+        pane.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 imageView.setY((newValue.doubleValue() - imageView.getFitHeight()) / 2);
@@ -203,7 +211,7 @@ public class Controller {
 
         });
 
-        borderPane.widthProperty().addListener(new ChangeListener<Number>() {
+        pane.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 imageView.setX((newValue.doubleValue() - imageView.getFitWidth()) / 2);
@@ -213,7 +221,7 @@ public class Controller {
 
 
         final double scale = 5;
-        borderPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+        stackPane.addEventFilter(ScrollEvent.SCROLL, event -> {
             double rate = 0;
             if (event.getDeltaY() > 0) {
                 rate = 0.05;
@@ -227,18 +235,18 @@ public class Controller {
             }
 
             Point2D eventPoint = new Point2D(event.getSceneX(), event.getSceneY());
-            Point2D imagePoint = borderPane.localToScene(new Point2D(imageView.getX(), imageView.getY()));
+            Point2D imagePoint = stackPane.localToScene(new Point2D(imageView.getX(), imageView.getY()));
             Rectangle2D imageRect = new Rectangle2D(imagePoint.getX(), imagePoint.getY(), imageView.getFitWidth(), imageView.getFitHeight());
             Point2D ratePoint;
             Point2D eventPointDistance;
             if (newWidth > scale / 4 * width && imageRect.contains(eventPoint)) {
                 ratePoint = eventPoint.subtract(imagePoint);
                 ratePoint = new Point2D(ratePoint.getX() / imageView.getFitWidth(), ratePoint.getY() / imageView.getFitHeight());
-                eventPointDistance = borderPane.sceneToLocal(eventPoint);
+                eventPointDistance = pane.sceneToLocal(eventPoint);
             } else {
                 ratePoint = new Point2D(0.5, 0.5);
-                eventPointDistance = new Point2D(borderPane.getWidth() / 2,
-                        borderPane.getHeight() / 2);
+                eventPointDistance = new Point2D(pane.getWidth() / 2,
+                        pane.getHeight() / 2);
             }
 
             imageView.setX(eventPointDistance.getX() - newWidth * ratePoint.getX());

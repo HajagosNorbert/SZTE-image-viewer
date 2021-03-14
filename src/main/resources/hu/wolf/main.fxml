@@ -176,12 +176,15 @@
                 </HBox>
             </bottom>
             <center>
-            <HBox prefHeight="438.0" prefWidth="786.0" BorderPane.alignment="CENTER">
+            <HBox alignment="TOP_CENTER" prefHeight="438.0" prefWidth="786.0" BorderPane.alignment="CENTER">
                <children>
-                  <Pane prefHeight="200.0" prefWidth="200.0" />
-                  <StackPane prefHeight="438.0" prefWidth="281.0">
+                  <StackPane fx:id="stackPane" prefHeight="438.0" prefWidth="281.0">
                      <children>
-                            <ImageView fx:id="imageView" fitHeight="414.0" fitWidth="679.0" onMouseClicked="#readMousePos" pickOnBounds="true" preserveRatio="true" />
+                        <Pane fx:id="pane" prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                                  <ImageView fx:id="imageView" fitHeight="414.0" fitWidth="679.0" onMouseClicked="#readMousePos" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
                      </children>
                   </StackPane>
                </children>
