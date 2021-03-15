@@ -27,35 +27,6 @@ public class Controller {
 
     private Image image;
 
-    /**
-     * Calls the ImageIOHandler.loadImage() method, puts the loaded image into the ImageView and logs the result
-     */
-    @FXML
-    private void handleOpenAction()   {
-        Image loadedImage = ImageIOHandler.loadImage();
-        if(loadedImage == null){
-            System.out.println("Didn't open anything");
-            return;
-        }
-        this.image = loadedImage;
-        this.imageView.setImage(image);
-        System.out.println("fileUrl: " + this.image.getUrl());
-        System.out.println("+height: " + this.image.getHeight());
-        System.out.println("+width : " + this.image.getWidth());
-    }
-
-    /**
-     * Calls the ImageIOHandler.saveImage() method with image convertion to BufferedImage and logs the result
-     */
-    @FXML
-    private void handleSaveAction() {
-        boolean success = ImageIOHandler.saveImage(SwingFXUtils.fromFXImage(this.image, null));
-        if(success)
-            System.out.println("Save successful");
-        else
-            System.out.println("Save not happened");
-    }
-
     @FXML
     private void handleRotateRightAction(){
         if (imageView == null) return;
