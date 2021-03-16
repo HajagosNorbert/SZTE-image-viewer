@@ -20,6 +20,20 @@ Egyszerű JavaFX képnézegető program, amellyel képesek vagyunk egy képet me
   1. Támogatott képformátumok listája (pl: _.giff_)
   2. Képszerkesztési műveletek listája (pl: _kicsinyítés_, _nagyítás_)
 ---
+
+## Munkaterv
+
+#### Hajagos Norbert
+- [ ] Kép megnyitás
+- [ ] Kép mentés
+
+#### Wolf Levente
+- [ ] Színskála
+
+#### Molnár Ádám
+- [ ] Nagyítás
+
+
 ## [Tervdokumentáció link](https://lucid.app/lucidchart/invitations/accept/1ed963ff-de0c-4eea-940d-d41ed3c0cab4)
 
 ## [Tesztjegyzőkönyv link](./TestReport.md)
