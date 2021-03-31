@@ -3,29 +3,34 @@ package hu.wolf;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.*;
 import javafx.scene.image.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.embed.swing.SwingFXUtils;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
 public class Controller {
+
+    private final Model model;
+
     @FXML
     private Button minusButton;
+
     @FXML
     private Button plusButton;
-    // fx:id="imageId"
+
     @FXML
     private ImageView imageView;
 
     @FXML
     private VBox rightVBox;
-
-    private Image image;
 
     /**
      * Calls the ImageIOHandler.loadImage() method, puts the loaded image into the ImageView and logs the result
@@ -37,11 +42,7 @@ public class Controller {
             System.out.println("Didn't open anything");
             return;
         }
-        this.image = loadedImage;
-        this.imageView.setImage(image);
-        System.out.println("fileUrl: " + this.image.getUrl());
-        System.out.println("+height: " + this.image.getHeight());
-        System.out.println("+width : " + this.image.getWidth());
+        model.setImage(loadedImage);
     }
 
     /**
@@ -49,25 +50,57 @@ public class Controller {
      */
     @FXML
     private void handleSaveAction() {
-        boolean success = ImageIOHandler.saveImage(SwingFXUtils.fromFXImage(this.image, null));
+        boolean success = ImageIOHandler.saveImage(SwingFXUtils.fromFXImage(model.getImage(), null));
         if(success)
             System.out.println("Save successful");
         else
             System.out.println("Save not happened");
     }
+    /**
+     * Internal function to rotate an image by a specified degree
+     *
+     * @param image The image to rotate
+     * @param angle the angel to rotate in degrees
+     * @return A new rotated Image object
+     */
+    private Image rotate(Image image, double angle){
+        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
 
-    @FXML
-    private void handleRotateRightAction(){
-        if (imageView == null) return;
+        double sin = Math.abs(Math.sin(Math.toRadians(angle))),
+                cos = Math.abs(Math.cos(Math.toRadians(angle)));
+        int w = bufferedImage.getWidth(null),
+            h = bufferedImage.getHeight(null);
 
-        imageView.setRotate(imageView.getRotate() + 90);
+        int newW = (int) Math.floor(w*cos + h*sin),
+                newH = (int) Math.floor(h*cos + w*sin);
+
+        BufferedImage rotatedBufferedImage = new BufferedImage(newW, newH, bufferedImage.getType());
+        Graphics2D g = rotatedBufferedImage.createGraphics();
+
+        g.translate((newW -w)/2, (newH -h)/2);
+        g.rotate(Math.toRadians(angle), w/2, h/2);
+        g.drawRenderedImage(bufferedImage, null);
+        g.dispose();
+        return SwingFXUtils.toFXImage(rotatedBufferedImage, null);
     }
 
+    /**
+     * Rotates the image model by 90 degrees
+     *
+     */
+    @FXML
+    private void handleRotateRightAction(){
+        if (model.getImage() == null) return;
+        model.setImage(rotate(model.getImage(), 90));
+    }
+    /**
+     * Rotates the image model by -90 degrees
+     *
+     */
     @FXML
     private void handleRotateLeftAction(){
-        if (imageView == null) return;
-
-        imageView.setRotate(imageView.getRotate() - 90);
+        if (model.getImage() == null) return;
+        model.setImage(rotate(model.getImage(), -90));
     }
 
     @FXML
@@ -122,23 +155,19 @@ public class Controller {
                         .otherwise((Effect) null)
         );
     }
-
-    @FXML
-    private CheckBox checkBox;
-
+    /**
+     * Inverts the image model
+     *
+     */
     @FXML
     private void handleInversion(){
-        if (checkBox.isSelected()){
-            Image invertedImage = invertImage(image);
-
-            imageView.setImage(invertedImage);
-        } else {
-            imageView.setImage(image);
-        }
-
-
+        model.setImage(invertImage(model.getImage()));
     }
-    
+
+    /**
+     * Internal method to invert an image
+     *
+     */
     private Image invertImage(Image image){
         PixelReader reader = image.getPixelReader();
 
@@ -157,14 +186,13 @@ public class Controller {
     }
  
 
-
     /**
      * handlezoom
      */
 
     @FXML
     private void handleZoom(){
-        if (imageView == null) return;
+        if (model.getImage() == null) return;
 
         plusButton.setVisible(!plusButton.isVisible());
         minusButton.setVisible(!minusButton.isVisible());
@@ -176,15 +204,26 @@ public class Controller {
         System.out.println("pozitiv");
     }
 
-    
 
     @FXML
     private void handleZoomMinusAction(){
         System.out.println("Negativ");
     }
 
+    /**
+     * takes in a model that suplies the image to show
+     *
+     */
+    public Controller(Model model) {
+        this.model = model;
+    }
 
-    public Controller() {
+    /**
+     * binds the model's datas to the view (GUI) so we don't have to update it manually
+     *
+     */
+    public void initialize() {
+        imageView.imageProperty().bind(model.getImageProperty());
     }
 
 }
