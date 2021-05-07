@@ -2,16 +2,23 @@ package hu.wolf;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.*;
 import javafx.scene.image.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.transform.Rotate;
+
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 
 public class Controller {
     @FXML
@@ -65,14 +72,14 @@ public class Controller {
     private void handleRotateRightAction(){
         if (imageView == null) return;
 
-        imageView.setRotate(imageView.getRotate() + 90);
+        image = RotationHandler.rotateImage(imageView, 90);
     }
 
     @FXML
     private void handleRotateLeftAction(){
         if (imageView == null) return;
 
-        imageView.setRotate(imageView.getRotate() - 90);
+        image = RotationHandler.rotateImage(imageView, -90);
     }
 
     @FXML
