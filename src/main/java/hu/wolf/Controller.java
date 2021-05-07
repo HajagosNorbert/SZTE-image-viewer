@@ -66,14 +66,14 @@ public class Controller {
     private void handleRotateRightAction(){
         if (imageView == null) return;
 
-        image = RotationHandler.rotateImage(imageView, 90);
+        image = RotationHandler.getRotatedImage(imageView, 90);
     }
 
     @FXML
     private void handleRotateLeftAction(){
         if (imageView == null) return;
 
-        image = RotationHandler.rotateImage(imageView, -90);
+        image = RotationHandler.getRotatedImage(imageView, -90);
     }
 
     // COLORSCLAE

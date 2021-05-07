@@ -13,7 +13,7 @@ public class RotationHandler {
      * @param rotationDegree the degree at which we rotate the ImageView
      * @return a snapshot Image from the rotated ImageView
      */
-    public static Image rotateImage(ImageView imageView, int rotationDegree) {
+    public static Image getRotatedImage(ImageView imageView, int rotationDegree) {
         imageView.setRotate(imageView.getRotate() + rotationDegree);
         SnapshotParameters params = new SnapshotParameters();
 
