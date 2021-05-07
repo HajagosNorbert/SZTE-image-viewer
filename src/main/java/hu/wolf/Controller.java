@@ -38,6 +38,7 @@ public class Controller {
 
     }
 
+    // OPEN & CLOSE
 
     /**
      * Calls the ImageIOHandler.loadImage() method, puts the loaded image into the ImageView and logs the result
@@ -68,6 +69,8 @@ public class Controller {
             System.out.println("Save not happened");
     }
 
+    // ROTATION RIGHT & LEFT
+
     @FXML
     private void handleRotateRightAction(){
         if (imageView == null) return;
@@ -81,6 +84,8 @@ public class Controller {
 
         image = RotationHandler.rotateImage(imageView, -90);
     }
+
+    // COLORSCLAE
 
     @FXML
     private void handleColorScale(){
@@ -138,6 +143,8 @@ public class Controller {
     @FXML
     private CheckBox checkBox;
 
+    // INVERSION
+
     /**
      * If the Invert checkbox is selected invert the image. <br>
      *     If the checkbox is deselected the image is inverted again.
@@ -149,6 +156,7 @@ public class Controller {
         imageView.setImage(image);
     }
 
+    // ZOOM
 
     /**
      * handlezoom
@@ -168,12 +176,9 @@ public class Controller {
         System.out.println("pozitiv");
     }
 
-
-
     @FXML
     private void handleZoomMinusAction(){
         System.out.println("Negativ");
     }
-
 
 }
