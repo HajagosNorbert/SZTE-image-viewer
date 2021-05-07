@@ -28,7 +28,9 @@ Egyszerű JavaFX képnézegető program, amellyel képesek vagyunk egy képet me
 - [ ] Kép mentés
 
 #### Wolf Levente
-- [ ] Színskála
+- [x] Színskála
+- [x] Kép invertálása
+- [x] Kép forgatása
 
 #### Molnár Ádám
 - [ ] Nagyítás
