@@ -1,24 +1,15 @@
 package hu.wolf;
 
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.effect.*;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.transform.Rotate;
-
-import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
 public class Controller {
     @FXML
@@ -114,30 +105,10 @@ public class Controller {
         int b = (int) blueSlider.getValue();
 
         rgbSliderLabel.setText("RGB (" + r + "," + g + "," + b + ")");
-        String hex = String.format("#%02x%02x%02x", r, g, b);
-        rgbBox.setStyle("-fx-background-color:" + hex);
+        String hex = String.format("#%02x%02x%02x", r, g, b); // hexadecimal rgb value
+        rgbBox.setStyle("-fx-background-color:" + hex); //rgbBox background color
 
-
-        ColorAdjust monochrome = new ColorAdjust();
-
-        Blend blush = new Blend(
-                BlendMode.MULTIPLY,
-                monochrome,
-                new ColorInput(
-                        0,
-                        0,
-                        500,
-                        396,
-                        Color.rgb(r, g, b)
-                )
-        );
-
-        imageView.effectProperty().bind(
-                Bindings
-                        .when(imageView.smoothProperty())
-                        .then((Effect) blush)
-                        .otherwise((Effect) null)
-        );
+        image = ColorScaleHandler.getColoredImage(imageView, r, g, b);
     }
 
     @FXML
