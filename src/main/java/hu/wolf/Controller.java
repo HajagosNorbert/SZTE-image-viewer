@@ -126,36 +126,16 @@ public class Controller {
     @FXML
     private CheckBox checkBox;
 
+    /**
+     * If the Invert checkbox is selected invert the image. <br>
+     *     If the checkbox is deselected the image is inverted again.
+     */
     @FXML
     private void handleInversion(){
-        if (checkBox.isSelected()){
-            Image invertedImage = invertImage(image);
+        image = InversionHandler.invertImage(image);
 
-            imageView.setImage(invertedImage);
-        } else {
-            imageView.setImage(image);
-        }
-
-
+        imageView.setImage(image);
     }
-    
-    private Image invertImage(Image image){
-        PixelReader reader = image.getPixelReader();
-
-        int w = (int)image.getWidth();
-        int h = (int)image.getHeight();
-
-        WritableImage wImage = new WritableImage(w, h);
-        PixelWriter writer = wImage.getPixelWriter();
-        for(int y = 0; y < h; y++) {
-            for(int x = 0; x < w; x++) {
-                Color color = reader.getColor(x, y);
-                writer.setColor(x, y, color.invert());
-            }
-        }
-        return wImage;
-    }
- 
 
 
     /**
