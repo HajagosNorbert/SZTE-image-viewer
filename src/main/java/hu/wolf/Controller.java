@@ -27,6 +27,11 @@ public class Controller {
 
     private Image image;
 
+    public Controller(Model model) {
+
+    }
+
+
     /**
      * Calls the ImageIOHandler.loadImage() method, puts the loaded image into the ImageView and logs the result
      */
@@ -156,15 +161,12 @@ public class Controller {
         System.out.println("pozitiv");
     }
 
-    
+
 
     @FXML
     private void handleZoomMinusAction(){
         System.out.println("Negativ");
     }
 
-
-    public Controller() {
-    }
 
 }
