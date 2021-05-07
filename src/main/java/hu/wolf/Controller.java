@@ -1,16 +1,14 @@
 package hu.wolf;
 
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.effect.*;
 import javafx.scene.image.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.embed.swing.SwingFXUtils;
 
 public class Controller {
@@ -26,6 +24,12 @@ public class Controller {
     private VBox rightVBox;
 
     private Image image;
+
+    public Controller(Model model) {
+
+    }
+
+    // OPEN & CLOSE
 
     /**
      * Calls the ImageIOHandler.loadImage() method, puts the loaded image into the ImageView and logs the result
@@ -56,19 +60,23 @@ public class Controller {
             System.out.println("Save not happened");
     }
 
+    // ROTATION RIGHT & LEFT
+
     @FXML
     private void handleRotateRightAction(){
         if (imageView == null) return;
 
-        imageView.setRotate(imageView.getRotate() + 90);
+        image = RotationHandler.getRotatedImage(imageView, 90);
     }
 
     @FXML
     private void handleRotateLeftAction(){
         if (imageView == null) return;
 
-        imageView.setRotate(imageView.getRotate() - 90);
+        image = RotationHandler.getRotatedImage(imageView, -90);
     }
+
+    // COLORSCLAE
 
     @FXML
     private void handleColorScale(){
@@ -97,66 +105,29 @@ public class Controller {
         int b = (int) blueSlider.getValue();
 
         rgbSliderLabel.setText("RGB (" + r + "," + g + "," + b + ")");
-        String hex = String.format("#%02x%02x%02x", r, g, b);
-        rgbBox.setStyle("-fx-background-color:" + hex);
+        String hex = String.format("#%02x%02x%02x", r, g, b); // hexadecimal rgb value
+        rgbBox.setStyle("-fx-background-color:" + hex); //rgbBox background color
 
-
-        ColorAdjust monochrome = new ColorAdjust();
-
-        Blend blush = new Blend(
-                BlendMode.MULTIPLY,
-                monochrome,
-                new ColorInput(
-                        0,
-                        0,
-                        500,
-                        396,
-                        Color.rgb(r, g, b)
-                )
-        );
-
-        imageView.effectProperty().bind(
-                Bindings
-                        .when(imageView.smoothProperty())
-                        .then((Effect) blush)
-                        .otherwise((Effect) null)
-        );
+        image = ColorScaleHandler.getColoredImage(imageView, r, g, b);
     }
 
     @FXML
     private CheckBox checkBox;
 
+    // INVERSION
+
+    /**
+     * If the Invert checkbox is selected invert the image. <br>
+     *     If the checkbox is deselected the image is inverted again.
+     */
     @FXML
     private void handleInversion(){
-        if (checkBox.isSelected()){
-            Image invertedImage = invertImage(image);
+        image = InversionHandler.invertImage(image);
 
-            imageView.setImage(invertedImage);
-        } else {
-            imageView.setImage(image);
-        }
-
-
+        imageView.setImage(image);
     }
-    
-    private Image invertImage(Image image){
-        PixelReader reader = image.getPixelReader();
 
-        int w = (int)image.getWidth();
-        int h = (int)image.getHeight();
-
-        WritableImage wImage = new WritableImage(w, h);
-        PixelWriter writer = wImage.getPixelWriter();
-        for(int y = 0; y < h; y++) {
-            for(int x = 0; x < w; x++) {
-                Color color = reader.getColor(x, y);
-                writer.setColor(x, y, color.invert());
-            }
-        }
-        return wImage;
-    }
- 
-
+    // ZOOM
 
     /**
      * handlezoom
@@ -176,15 +147,9 @@ public class Controller {
         System.out.println("pozitiv");
     }
 
-    
-
     @FXML
     private void handleZoomMinusAction(){
         System.out.println("Negativ");
-    }
-
-
-    public Controller() {
     }
 
 }

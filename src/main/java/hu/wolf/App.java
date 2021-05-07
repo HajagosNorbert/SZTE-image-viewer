@@ -1,5 +1,6 @@
 package hu.wolf;
 
+import com.sun.scenario.effect.Blend;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,18 +18,28 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
-
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("main"));
+        Model model = new Model();
+
+        scene = new Scene(loadFXML("main", model));
         stage.setResizable(false);
         stage.setTitle("ImageViewer");
         stage.setScene(scene);
         stage.show();
     }
-
-    private static Parent loadFXML(String fileName) throws IOException {
+    /**
+     * Loads an fxml file and provides the controllers with the model object
+     * @param fileName Name of the fxml file without extension
+     * @param model the model of the project
+     * @return The root node of an fxml file
+     */
+    private static Parent loadFXML(String fileName, Model model) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fileName + ".fxml"));
+        fxmlLoader.setControllerFactory(type ->{
+            if (type.equals(Controller.class))   return new Controller(model);
+            throw new IllegalArgumentException("Unexpected controller type: "+type);
+        });
         return fxmlLoader.load();
     }
 
