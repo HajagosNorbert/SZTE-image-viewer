@@ -1,5 +1,6 @@
 package hu.wolf;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
@@ -62,7 +63,7 @@ public class ImageIOHandler {
                 String imageUrl = file.toURI().toURL().toExternalForm();
                 return new Image(imageUrl);
             } catch (Exception e) {
-                System.err.println(e);
+                System.err.println(e.getMessage());
                 return null;
             }
         }
@@ -75,7 +76,7 @@ public class ImageIOHandler {
      * @param image A BufferedImage object that will be saved. You can convert a Javafx Image to a BufferedImage with the SwingFXUtils.fromFXImage() method
      * @return true if the save happened, false if it didn't.
      */
-    public static boolean saveImage(BufferedImage image){
+    public static boolean saveImage(Image image){
         if (image == null){
             System.out.println("No image to save");
             return false;
@@ -85,8 +86,9 @@ public class ImageIOHandler {
         if (fileToSave == null){
             return false;
         }
+        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
         try {
-            ImageIO.write(image, "png", fileToSave);
+            ImageIO.write(bufferedImage, "png", fileToSave);
             return true;
         } catch (IOException e) {
             return false;
