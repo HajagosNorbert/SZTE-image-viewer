@@ -45,7 +45,7 @@
         </MenuBar>
         <BorderPane fx:id="borderPane" prefHeight="600.0" prefWidth="1280.0" styleClass="border-pane" VBox.vgrow="NEVER">
             <center>
-                <ImageView fx:id="imageView" fitHeight="396.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                <ImageView fx:id="imageView" fitHeight="396.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
             </center>
             <right>
                 <VBox fx:id="rightVBox" prefHeight="497.0" prefWidth="220.0" spacing="10.0" styleClass="right-vbox" BorderPane.alignment="CENTER">
@@ -60,9 +60,9 @@
                         <Label layoutX="17.0" layoutY="24.0" text="Red" />
                         <Label layoutX="17.0" layoutY="41.0" text="Green" />
                         <Label layoutX="17.0" layoutY="58.0" text="Blue" />
-                         <Slider fx:id="redSlider" blockIncrement="1.0" layoutX="63.0" layoutY="25.0" max="255.0" onMouseDragged="#handleRGBSlider" onMouseMoved="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" />
-                        <Slider fx:id="greenSlider" blockIncrement="1.0" layoutX="63.0" layoutY="43.0" max="255.0" onDragDetected="#handleRGBSlider" onMouseDragged="#handleRGBSlider" onMouseMoved="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" />
-                        <Slider fx:id="blueSlider" blockIncrement="1.0" layoutX="63.0" layoutY="60.0" max="255.0" onDragDetected="#handleRGBSlider" onMouseDragged="#handleRGBSlider" onMouseMoved="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" />
+                         <Slider fx:id="redSlider" blockIncrement="1.0"  layoutX="63.0" layoutY="25.0" value="255.0" max="255.0" onMouseDragged="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" />
+                        <Slider fx:id="greenSlider" blockIncrement="1.0" layoutX="63.0" layoutY="43.0" value="255.0" max="255.0" onMouseDragged="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" />
+                        <Slider fx:id="blueSlider" blockIncrement="1.0" layoutX="63.0" layoutY="60.0" value="255.0" max="255.0" onMouseDragged="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" />
                               <Label fx:id="rgbSliderLabel" layoutX="26.0" layoutY="2.0" text="RGB">
                                   <font>
                                       <Font size="15.0" />
