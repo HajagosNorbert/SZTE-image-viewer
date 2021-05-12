@@ -1,24 +1,28 @@
 package hu.wolf;
 
-import javafx.scene.SnapshotParameters;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class RotationHandler {
 
-    /**
-     * Rotate the image and imageView by a given degree <br>
-     *     The rotated image is a snapshot of the imageView
-     * @param imageView which contains the image
-     * @param rotationDegree the degree at which we rotate the ImageView
-     * @return a snapshot Image from the rotated ImageView
-     */
-    public static Image getRotatedImage(ImageView imageView, int rotationDegree) {
-        imageView.setRotate(imageView.getRotate() + rotationDegree);
-        SnapshotParameters params = new SnapshotParameters();
+    public static Image rotateImage(Image image, double angle) {
+        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
 
-        Image rotatedImage = imageView.snapshot(params, null);
+        double sin = Math.abs(Math.sin(Math.toRadians(angle))), cos = Math.abs(Math.cos(Math.toRadians(angle)));
+        int w = bufferedImage.getWidth(null), h = bufferedImage.getHeight(null);
 
-        return rotatedImage;
+        int newW = (int) Math.floor(w * cos + h * sin), newH = (int) Math.floor(h * cos + w * sin);
+
+        BufferedImage rotatedBufferedImage = new BufferedImage(newW, newH, bufferedImage.getType());
+        Graphics2D g = rotatedBufferedImage.createGraphics();
+
+        g.translate((newW - w) / 2.0, (newH - h) / 2.0);
+        g.rotate(Math.toRadians(angle), w / 2.0, h / 2.0);
+        g.drawRenderedImage(bufferedImage, null);
+        g.dispose();
+        return SwingFXUtils.toFXImage(rotatedBufferedImage, null);
     }
 }
