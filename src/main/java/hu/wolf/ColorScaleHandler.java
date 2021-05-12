@@ -17,8 +17,6 @@ public class ColorScaleHandler {
         r = g = b = 255;
     }
     /**
-     * Get a snapshot image from the colored imageView
-     *
      * @param r         red value
      * @param g         green value
      * @param b         blue value
