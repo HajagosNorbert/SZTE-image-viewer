@@ -1,22 +1,16 @@
 package hu.wolf;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.image.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.image.ImageView;
 
 public class Controller {
     private final Model model;
 
-
-    @FXML
-    private Button minusButton;
-    @FXML
-    private Button plusButton;
     @FXML
     private ImageView imageView;
     @FXML
@@ -124,8 +118,6 @@ public class Controller {
         model.setImage(InversionHandler.invertImage(model.getImage()));
     }
 
-    // ZOOM
-
     /**
      * handlezoom
      */
@@ -134,19 +126,16 @@ public class Controller {
     private void handleZoom() {
         if (model.getImage() == null) return;
 
-        plusButton.setVisible(!plusButton.isVisible());
-        minusButton.setVisible(!minusButton.isVisible());
-
+        ZoomHandler.applyZoomToImageview(imageView, model.getImage());
     }
 
     @FXML
-    private void handleZoomPlusAction() {
-        System.out.println("pozitiv");
-    }
+    private void resize() {
+        Image image =model.getImage();
+        if (model.getImage() == null) return;
+        ZoomHandler.reset(imageView,image.getWidth(),image.getHeight());
 
-    @FXML
-    private void handleZoomMinusAction() {
-        System.out.println("Negativ");
+
     }
 
 }
