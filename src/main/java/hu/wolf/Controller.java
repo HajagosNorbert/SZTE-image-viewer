@@ -1,43 +1,16 @@
 package hu.wolf;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.image.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.application.Application;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class Controller {
-    private static final double MIN_PIXELS = 10;
     private final Model model;
 
-
-    @FXML
-    private Button minusButton;
-    @FXML
-    private Button plusButton;
     @FXML
     private ImageView imageView;
     @FXML
@@ -154,6 +127,14 @@ public class Controller {
         if (model.getImage() == null) return;
 
         ZoomHandler.applyZoomToImageview(imageView, model.getImage());
+    }
+
+    @FXML
+    private void resize() {
+        Image image =model.getImage();
+        if (model.getImage() == null) return;
+        ZoomHandler.reset(imageView,image.getWidth(),image.getHeight());
+
 
     }
 

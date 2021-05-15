@@ -11,7 +11,6 @@ public class ZoomHandler {
 
     private static final int MIN_PIXELS = 10;
 
-
     public static void applyZoomToImageview(ImageView imageView, Image image) {
 
 
@@ -70,7 +69,7 @@ public class ZoomHandler {
     }
 
     // reset to the top left:
-    private static void reset(ImageView imageView, double width, double height) {
+    public static void reset(ImageView imageView, double width, double height) {
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
     }
 
