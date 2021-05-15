@@ -153,24 +153,7 @@
             <left>
                 <VBox prefHeight="497.0" prefWidth="220.0" visible="false" BorderPane.alignment="CENTER" />
             </left>
-            <bottom>
-                <HBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                    <children>
 
-                        <Button fx:id="minusButton" mnemonicParsing="false" onAction="#handleZoomMinusAction" text="Button" visible="false">
-                            <font>
-                                <Font size="20.0" />
-                            </font>
-                        </Button>
-
-                        <Button fx:id="plusButton" mnemonicParsing="false" onAction="#handleZoomPlusAction" text="Button" visible="false">
-                        <font>
-                            <Font size="20.0" />
-                        </font>
-                    </Button>
-                    </children>
-                </HBox>
-            </bottom>
         </BorderPane>
 
     </children>

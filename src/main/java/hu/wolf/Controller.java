@@ -1,15 +1,36 @@
 package hu.wolf;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.application.Application;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class Controller {
+    private static final double MIN_PIXELS = 10;
     private final Model model;
 
 
@@ -124,8 +145,6 @@ public class Controller {
         model.setImage(InversionHandler.invertImage(model.getImage()));
     }
 
-    // ZOOM
-
     /**
      * handlezoom
      */
@@ -134,19 +153,8 @@ public class Controller {
     private void handleZoom() {
         if (model.getImage() == null) return;
 
-        plusButton.setVisible(!plusButton.isVisible());
-        minusButton.setVisible(!minusButton.isVisible());
+        ZoomHandler.applyZoomToImageview(imageView, model.getImage());
 
-    }
-
-    @FXML
-    private void handleZoomPlusAction() {
-        System.out.println("pozitiv");
-    }
-
-    @FXML
-    private void handleZoomMinusAction() {
-        System.out.println("Negativ");
     }
 
 }
