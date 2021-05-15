@@ -33,7 +33,7 @@ Egyszerű JavaFX képnézegető program, amellyel képesek vagyunk egy képet me
 - [x] Kép forgatása
 
 #### Molnár Ádám
-- [ ] Nagyítás
+- [x] Nagyítás
 
 
 ## [Tervdokumentáció link](https://lucid.app/lucidchart/invitations/accept/1ed963ff-de0c-4eea-940d-d41ed3c0cab4)
