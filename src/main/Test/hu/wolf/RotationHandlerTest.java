@@ -36,7 +36,7 @@ class RotationHandlerTest {
 
     @ParameterizedTest
     @MethodSource("rotationAngleToImage")
-    void monthNames(int rotationAngle, String imageName) throws IOException {
+    void testRotation(int rotationAngle, String imageName) throws IOException {
         File expectedFile = new File("src/main/Test/testImgs/" + imageName);
         File rawFile = new File("src/main/Test/testImgs/catto.jpg");
 
