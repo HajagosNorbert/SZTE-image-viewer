@@ -71,10 +71,10 @@ public class InversionHandlerTest {
                     System.err.printf("At pixel x: %d y: %d\n The two colors dont match\n", x, y);
 
                     System.err.println("expected:");
-                    System.err.printf("R: %f G: %f B: %f\n", expectedR, expectedB, expectedG);
+                    System.err.printf("R: %.0f G: %.0f B: %.0f\n", expectedR * 255, expectedB * 255, expectedG * 255);
 
                     System.err.println("resulted:");
-                    System.err.printf("R: %f G: %f B: %f\n", resultR, resultB, resultG);
+                    System.err.printf("R: %.0f G: %.0f B: %.0f\n", resultR * 255, resultB * 255, resultG *255);
                     return false;
                 }
             }
