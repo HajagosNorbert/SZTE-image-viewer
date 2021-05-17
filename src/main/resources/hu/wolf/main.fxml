@@ -1,25 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox prefHeight="600.0" prefWidth="1280.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.wolf.Controller">
+<VBox prefHeight="600.0" prefWidth="1280.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.wolf.Controller">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
@@ -48,7 +36,7 @@
                 <ImageView fx:id="imageView" fitHeight="396.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
             </center>
             <right>
-                <VBox fx:id="rightVBox" prefHeight="497.0" prefWidth="220.0" spacing="10.0" styleClass="right-vbox" BorderPane.alignment="CENTER">
+                <VBox fx:id="rightVBox" prefHeight="497.0" prefWidth="220.0" spacing="10.0" styleClass="right-vbox" visible="false"  BorderPane.alignment="CENTER">
                     <children>
                         <Label alignment="CENTER" prefHeight="36.0" prefWidth="219.0" text="Color Scale">
                             <font>
@@ -60,9 +48,9 @@
                         <Label layoutX="17.0" layoutY="24.0" text="Red" />
                         <Label layoutX="17.0" layoutY="41.0" text="Green" />
                         <Label layoutX="17.0" layoutY="58.0" text="Blue" />
-                         <Slider fx:id="redSlider" blockIncrement="1.0"  layoutX="63.0" layoutY="25.0" value="255.0" max="255.0" onMouseDragged="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" />
-                        <Slider fx:id="greenSlider" blockIncrement="1.0" layoutX="63.0" layoutY="43.0" value="255.0" max="255.0" onMouseDragged="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" />
-                        <Slider fx:id="blueSlider" blockIncrement="1.0" layoutX="63.0" layoutY="60.0" value="255.0" max="255.0" onMouseDragged="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" />
+                         <Slider fx:id="redSlider" blockIncrement="1.0" layoutX="63.0" layoutY="25.0" max="255.0" onMouseDragged="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" value="255.0" />
+                        <Slider fx:id="greenSlider" blockIncrement="1.0" layoutX="63.0" layoutY="43.0" max="255.0" onMouseDragged="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" value="255.0" />
+                        <Slider fx:id="blueSlider" blockIncrement="1.0" layoutX="63.0" layoutY="60.0" max="255.0" onMouseDragged="#handleRGBSlider" prefHeight="14.0" prefWidth="120.0" value="255.0" />
                               <Label fx:id="rgbSliderLabel" layoutX="26.0" layoutY="2.0" text="RGB">
                                   <font>
                                       <Font size="15.0" />
