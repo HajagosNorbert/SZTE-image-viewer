@@ -26,7 +26,7 @@ A program az elvárt feltételeknek megfelel.
 - ColorScale ikonra kattintással a sidebar láthatóvá tétele: sikeres
 - RGB színváltoztatás RGB(100,100,100)-ról RGB(200,0,255)-re (ezzel a fehérből lila lett): sikeres
 - Kép mentése: sikeres!
-- Színezett kép mentése: Nem lila árnyalatban mentette hanem kékben (sötétebb)! -- HIBA
+- Színezett kép mentése: sikeres
 - A mentett kép újra megnyitása: sikeres
 
 **4. Teszt** <br>
@@ -35,7 +35,7 @@ A program az elvárt feltételeknek megfelel.
 - Nagyítás: sikeres
 - Nagyított kép mozgatása: sikeres
 - Kép mentéses (A képet megfelelően nem a nagyított változatban mentette, hanem a nagyítatlan képet): sikeres
-- Nagyított állapot közben forgatás: !A kép 2 forgatásra helyesen működik, páratlan számúra nem fordul a keret a képpel!-- HIBA
+- Nagyított állapot közben forgatás: sikeres
 - A kép újraméretezése az eredeti formába: sikeres
 
 **5. Teszt** <br>
