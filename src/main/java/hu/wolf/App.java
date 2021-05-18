@@ -27,6 +27,8 @@ public class App extends Application {
         Model model = new Model();
 
         scene = new Scene(loadFXML("main", model));
+
+        stage.getIcons().add(new Image("https://i.ibb.co/1n8p1Ly/icon.png"));
         stage.setResizable(false);
         stage.setTitle("ImageViewer");
         stage.setScene(scene);
