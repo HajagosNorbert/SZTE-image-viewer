@@ -1,0 +1,8 @@
+hu\wolf\InversionHandler.class
+hu\wolf\ZoomHandler.class
+hu\wolf\RotationHandler.class
+hu\wolf\Controller.class
+hu\wolf\ColorScaleHandler.class
+hu\wolf\Model.class
+hu\wolf\ImageIOHandler.class
+hu\wolf\App.class

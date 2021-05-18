@@ -47,6 +47,7 @@ public class ColorScaleHandler {
         double rScale = r/255.0;
         double gScale = g/255.0;
         double bScale = b/255.0;
+
         int alpha, red, green, blue;
 
         for (int y = 0; y < height; y++) {
@@ -54,9 +55,10 @@ public class ColorScaleHandler {
                 int p = img.getRGB(x, y);
 
                 alpha = (p >> 24) & 0xff;
-                red = (int) rScale * ((p >> 16) & 0xff);
-                green = (int) gScale * ((p >> 8) & 0xff);
-                blue = (int) bScale * (p & 0xff);
+                red = (int) (rScale * ((p >> 16) & 0xff));
+                green = (int) (gScale * ((p >> 8) & 0xff));
+                blue = (int) (bScale * (p & 0xff));
+                System.out.println(red + " " + green +" " + blue);
 
                 p = (alpha << 24) | (red << 16) | (green << 8) | blue;
 

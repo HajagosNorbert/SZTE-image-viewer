@@ -57,6 +57,7 @@ public class Controller {
         if (model.getImage() == null) return;
 
         model.setImage(RotationHandler.rotateImage(model.getImage(), 90));
+        ZoomHandler.reset(imageView, model.getImage().getWidth(), model.getImage().getHeight() );
         ColorScaleHandler.applyColorScaleToView(imageView);
     }
 
@@ -64,6 +65,7 @@ public class Controller {
     private void handleRotateLeftAction() {
         if (model.getImage() == null) return;
         model.setImage(RotationHandler.rotateImage(model.getImage(), -90));
+        ZoomHandler.reset(imageView, model.getImage().getWidth(), model.getImage().getHeight() );
         ColorScaleHandler.applyColorScaleToView(imageView);
     }
 
@@ -127,6 +129,8 @@ public class Controller {
         if (model.getImage() == null) return;
 
         ZoomHandler.applyZoomToImageview(imageView, model.getImage());
+        ColorScaleHandler.applyColorScaleToView(imageView);
+
     }
 
     @FXML
@@ -134,6 +138,8 @@ public class Controller {
         Image image =model.getImage();
         if (model.getImage() == null) return;
         ZoomHandler.reset(imageView,image.getWidth(),image.getHeight());
+        ColorScaleHandler.applyColorScaleToView(imageView);
+
 
 
     }
